@@ -1,35 +1,9 @@
 "use client";
-import {
-  FaArrowUp,
-  FaCheckDouble,
-  FaCrown,
-  FaBolt,
-  Fa7Gift,
-  FaPiggyBank,
-  FaRocketchat,
-  FaCoins,
-  FaGift,
-} from "react-icons/fa";
+
 import { CgClose } from "react-icons/cg";
-import { PiWarningCircleLight } from "react-icons/pi";
-import { HiOutlineBolt, HiBolt } from "react-icons/hi2";
-import { TbKey, TbCake } from "react-icons/tb";
-import { BiLike } from "react-icons/bi";
-import {
-  BsArrowUpShort,
-  BsArrowRight,
-  BsArrowLeft,
-  BsBoxSeam,
-} from "react-icons/bs";
-import { RiCouponLine, RiCheckDoubleFill } from "react-icons/ri";
-import {
-  IoChatbubbleOutline,
-  IoCopyOutline,
-  IoChevronBack,
-} from "react-icons/io5";
-import { LuTwitter } from "react-icons/lu";
-import { FiFacebook } from "react-icons/fi";
-import { MdOutlineMailOutline } from "react-icons/md";
+import { BsArrowLeft } from "react-icons/bs";
+import { RiCouponLine } from "react-icons/ri";
+
 
 function WayToRedeem({ WayToRedeem }) {
   const wayToRedeemData = [
