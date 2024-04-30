@@ -31,7 +31,7 @@ function WayToRedeem({ WayToRedeem }) {
       <section className="grid place-content-center">
         <div className="container items-center mt-10">
           <div className="bg-[#364BFF] w-[475px] h-[88px] inline-grid items-center rounded-t-3xl p-4">
-            <div class="flex justify-between items-center">
+            <div className="flex justify-between items-center">
               <h4 className="text-lg text-white font-medium flex">
                 <span className="text-white p-1.5" onClick={WayToRedeem}>
                   <BsArrowLeft />
