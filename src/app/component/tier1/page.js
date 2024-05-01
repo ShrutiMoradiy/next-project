@@ -9,11 +9,44 @@ import { RiCheckDoubleFill } from "react-icons/ri";
 import { IoChatbubbleOutline } from "react-icons/io5";
 
 function Tier1() {
-  const [tiers, setTiers] = useState([]);
+  const [tiers, setTiers] = useState([
+    // { tierName: "tier1", tierPoints: 0 },
+    // { tierName: "tier2", tierPoints: 500 },
+    // { tierName: "tier3", tierPoints: 1000 },
+    // { tierName: "tier4", tierPoints: 2500 },
+    // { tierName: "tier5", tierPoints: 4000 },
+    // { tierName: "tier6", tierPoints: 6000 },
+    // { tierName: "tier6", tierPoints: 7000 },
+    // { tierName: "tier6", tierPoints: 8000 },
+    // { tierName: "tier6", tierPoints: 9000 },
+    // { tierName: "tier6", tierPoints: 10000 },
+  ]);
   const [formData, setFormData] = useState([{ tierName: "", tierPoints: "" }]);
   const [progressWidth, setProgressWidth] = useState(0);
   const [maxTierPoints, setMaxTierPoints] = useState(0);
   const [userPosition, setUserPosition] = useState(0);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    if (containerRef.current && tiers.length > 0) {
+      const containerWidth = containerRef.current.clientWidth;
+      const tiersWidth = containerRef.current.scrollWidth;
+
+      // Calculate the scroll position based on user's position
+      let scrollPosition =
+        (userPosition / tiers[tiers.length - 1].points) *
+        (tiersWidth - containerWidth);
+
+      // Ensure scroll position is within bounds
+      scrollPosition = Math.min(
+        Math.max(scrollPosition, 0),
+        tiersWidth - containerWidth
+      );
+
+      // Scroll the container to the calculated position
+      containerRef.current.scrollLeft = scrollPosition;
+    }
+  }, [userPosition, tiers]);
 
   // Form input change handler
   const handleInputChange = (e) => {
@@ -68,6 +101,7 @@ function Tier1() {
   const maxTierPoints1 = tiers.length > 0 ? tiers[tiers.length - 1].points : 0;
 
   const positionRange = maxTierPoints1 - minTierPoints;
+  console.log('progressWidth', progressWidth)
 
   return (
     <>
@@ -179,24 +213,28 @@ function Tier1() {
                 </div>
               </div>
 
+              <div className={userPosition && userPosition > minTierPoints && tiers.length > 4 ? '-ml-[16px] w-[107%]' : ''}>
               <div
                 className={`w-full ${
                   tiers.length > 4 ? "overflow-x-auto" : ""
                 }`}
+                ref={containerRef}
               >
                 {userPosition !== 0 && (
                   <div
                     className="w-24 h-10 bg-white rounded-sm flex mt-2.5 justify-center"
                     style={{
                       marginLeft:
-                        userPosition === 0
+                      userPosition === 0 || tiers.length === 1
                           ? "0%"
                           : userPosition < minTierPoints
                           ? "0%"
+                          : userPosition / maxTierPoints >= 0.8 && tiers.length < 5
+                          ? "80%"
                           : userPosition > maxTierPoints
                           ? "100%"
-                          : userPosition / maxTierPoints >= 0.8
-                          ? "85%"
+                          : userPosition >= maxTierPoints || tiers.length >= 4 && userPosition === tiers
+                          ? "110%"                          
                           : `${
                               ((userPosition - minTierPoints) / positionRange) *
                               100
@@ -209,7 +247,7 @@ function Tier1() {
                         className="bg-white origin-center rotate-45 rounded-br-sm w-3 h-3 mt-2"
                         style={{
                           marginLeft:
-                            userPosition === 0
+                          userPosition === 0 || tiers.length === 1
                               ? "0%"
                               : userPosition > maxTierPoints
                               ? "90%"
@@ -256,14 +294,24 @@ function Tier1() {
                     tiers.map((tier, index) => {
                       const isFirstTier = index === 0;
                       const isLastTier = index === tiers.length - 1;
-                      const leftPosition = isFirstTier
-                        ? "0%"
+                      const prevLeftPosition =
+                      index > 0
+                        ? ((tiers[index - 1].points - minTierPoints) /
+                            positionRange) *
+                          100
+                        : 0;
+                      let leftPosition = isFirstTier
+                        ? 0
                         : isLastTier
-                        ? "100%"
+                        ? 100
                         : `${
-                            ((tier.points - minTierPoints) / positionRange) *
+                            ((tier.points - minTierPoints) /
+                              positionRange) *
                             100
-                          }%`;
+                          }`;
+                          if (leftPosition - prevLeftPosition < 10 && index > 0) {
+                            leftPosition = prevLeftPosition + 10;
+                          }
 
                       if (
                         userPosition > tier.points ||
@@ -275,7 +323,7 @@ function Tier1() {
                             className="bg-blue-600 w-6 h-6 rounded-full p-2 mt-6"
                             style={{
                               position: "absolute",
-                              left: leftPosition,
+                              left: leftPosition + "%",
                               transform: "translate(-50%, -50%)",
                             }}
                           ></div>
@@ -286,21 +334,25 @@ function Tier1() {
                   {tiers.map((tier, index) => {
                     const isFirstTier = index === 0;
                     const isLastTier = index === tiers.length - 1;
+                   
                     const leftPosition = isFirstTier
-                      ? "0%"
+                      ? 0  
+                      : index === 0 && userPosition
+                      ? 1                     
                       : isLastTier
-                      ? "100%"
+                      ? 100
                       : `${
-                          ((tier.points - minTierPoints) / positionRange) * 100
-                        }%`;
-
+                          ((tier.points - minTierPoints) / positionRange) *
+                          100
+                        }`;
+                       
                     return (
                       <div
                         key={index}
                         className="bg-white w-2 h-2 rounded mt-2"
                         style={{
                           position: "absolute",
-                          left: leftPosition,
+                          left: leftPosition + "%",
                           transform: "translate(-50%, -50%)",
                         }}
                       ></div>
@@ -321,6 +373,10 @@ function Tier1() {
                   {tiers.map((tier, index) => {
                     const isFirstTier = index === 0;
                     const isLastTier = index === tiers.length - 1;
+                    const minTierPoints = tiers[0].points;
+                    const maxTierPoints = tiers[tiers.length - 1].points;
+                    const positionRange = maxTierPoints - minTierPoints;
+
                     const prevLeftPosition =
                       index > 0
                         ? ((tiers[index - 1].points - minTierPoints) /
@@ -330,29 +386,30 @@ function Tier1() {
 
                     let leftPosition =
                       index > 3 && isFirstTier
-                        ? "1%"
+                        ? 1
                         : isFirstTier
-                        ? "0%"
+                        ? 0
                         : isLastTier && index < 6
-                        ? "94%"
+                        ? 92
                         : isLastTier
-                        ? "96%"
+                        ? 96
                         : `${
-                            ((tier.points - minTierPoints) / positionRange) *
+                            ((tier.points - minTierPoints) /
+                              positionRange) *
                             100
-                          }%`;
+                          }`;
 
-                    if (leftPosition - prevLeftPosition < 20 && index > 0) {
-                      leftPosition = prevLeftPosition + 20;
+                    if (leftPosition - prevLeftPosition <= 10 && tiers.length > 0 && tiers.length < isLastTier) {
+                      leftPosition = prevLeftPosition + 10  ;
                     }
-
+                    console.log("leftPosition", leftPosition);
                     return (
                       <div
                         key={index}
                         className="text-white m-4"
                         style={{
                           position: "absolute",
-                          left: leftPosition,
+                          left: leftPosition + "%",
                           transform: "translate(-50%, -50%)",
                           textAlign:
                             index === 0
@@ -372,6 +429,7 @@ function Tier1() {
                     );
                   })}
                 </div>
+              </div>
               </div>
             </div>
 

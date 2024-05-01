@@ -31,3 +31,7 @@
     text-wrap: balance;
   }
 }
+
+.overflow-x-auto::-webkit-scrollbar {
+  width: 10px; /* Set the width of the scrollbar */
+}

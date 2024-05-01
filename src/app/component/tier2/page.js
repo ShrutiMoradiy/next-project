@@ -341,7 +341,7 @@ const Tier2 = ({ tiers, userPosition, maxTierPoints }) => {
                       </div>
                     </div>
                   )}
-                  {/* <div className="bg-neutral-800 min-w-80 h-2 rounded mt-3 items-center justify-between flex">
+                  <div className="bg-neutral-800 min-w-80 h-2 rounded mt-3 items-center justify-between flex">
                     <div className="bg-[#D4A000] w-6 h-6 rounded-full p-2">
                       <div className="bg-[#D4A000] w-[115px] h-2 rounded-e -ml-6 flex justify-between">
                         <div className="bg-white w-2 h-2 ml-6 rounded"></div>
@@ -349,8 +349,8 @@ const Tier2 = ({ tiers, userPosition, maxTierPoints }) => {
                     </div>
                     <div className="bg-white w-2 h-2 rounded"></div>
                     <div className="bg-white w-2 h-2 rounded"></div>
-                  </div> */}
-                  <div className="bg-neutral-800 min-w-80 h-2 rounded mt-4 items-center flex relative">
+                  </div>
+                  {/* <div className="bg-neutral-800 min-w-80 h-2 rounded mt-4 items-center flex relative">
                     <div
                       className="bg-[#D4A000] h-2 -ml-4 rounded-r flex justify-between"
                       style={{
@@ -385,7 +385,7 @@ const Tier2 = ({ tiers, userPosition, maxTierPoints }) => {
                         ></div>
                       );
                     })}
-                  </div>
+                  </div> */}
 
                   <div className="flex gap-2 pt-3 mb-10 relative">
                     {tiers.map((tier, index) => {
