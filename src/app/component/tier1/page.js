@@ -101,7 +101,7 @@ function Tier1() {
   const maxTierPoints1 = tiers.length > 0 ? tiers[tiers.length - 1].points : 0;
 
   const positionRange = maxTierPoints1 - minTierPoints;
-  console.log('progressWidth', progressWidth)
+  console.log("progressWidth", progressWidth);
 
   return (
     <>
@@ -213,223 +213,250 @@ function Tier1() {
                 </div>
               </div>
 
-              <div className={userPosition && userPosition > minTierPoints && tiers.length > 4 ? '-ml-[16px] w-[107%]' : ''}>
               <div
-                className={`w-full ${
-                  tiers.length > 4 ? "overflow-x-auto" : ""
-                }`}
-                ref={containerRef}
+                className={
+                  userPosition &&
+                  userPosition > minTierPoints &&
+                  tiers.length > 4
+                    ? "-ml-[16px] w-[107%]"
+                    : ""
+                }
               >
-                {userPosition !== 0 && (
-                  <div
-                    className="w-24 h-10 bg-white rounded-sm flex mt-2.5 justify-center"
-                    style={{
-                      marginLeft:
-                      userPosition === 0 || tiers.length === 1
-                          ? "0%"
-                          : userPosition < minTierPoints
-                          ? "0%"
-                          : userPosition / maxTierPoints >= 0.8 && tiers.length < 5
-                          ? "80%"
-                          : userPosition > maxTierPoints
-                          ? "100%"
-                          : userPosition >= maxTierPoints || tiers.length >= 4 && userPosition === tiers
-                          ? "110%"                          
-                          : `${
-                              ((userPosition - minTierPoints) / positionRange) *
-                              100
-                            }%`,
-                    }}
-                  >
-                    <div className="text-xs font-medium pt-2.5">
-                      You are here
-                      <div
-                        className="bg-white origin-center rotate-45 rounded-br-sm w-3 h-3 mt-2"
-                        style={{
-                          marginLeft:
-                          userPosition === 0 || tiers.length === 1
-                              ? "0%"
-                              : userPosition > maxTierPoints
-                              ? "90%"
-                              : userPosition / maxTierPoints >= 0.8
-                              ? "85%"
-                              : `${
-                                  ((userPosition - minTierPoints) /
-                                    positionRange) *
-                                  100
-                                }%`,
-                        }}
-                      ></div>
-                    </div>
-                  </div>
-                )}
-
                 <div
-                  className={`bg-neutral-800 w-auto h-2 rounded mt-4 items-center flex relative ${
-                    tiers.length > 4
-                      ? "min-w-[130%]"
-                      : tiers.length > 6
-                      ? "min-w-[150%]"
-                      : tiers.length > 10
-                      ? "min-w-[200%]"
-                      : "min-w-auto"
+                  className={`w-full ${
+                    tiers.length > 4 ? "overflow-x-auto" : ""
                   }`}
+                  ref={containerRef}
                 >
-                  <div
-                    className="bg-blue-600 h-2 rounded flex justify-between"
-                    style={{
-                      width:
-                        userPosition === 0 || tiers.length === 1
-                          ? "0%"
-                          : userPosition >= maxTierPoints
-                          ? "100%"
-                          : `${
-                              ((userPosition - minTierPoints) / positionRange) *
-                              100
-                            }%`,
-                    }}
-                  ></div>
+                  {userPosition !== 0 && (
+                    <div
+                      className="w-24 h-10 bg-white rounded-sm flex mt-2.5 justify-center"
+                      style={{
+                        marginLeft:
+                          userPosition === 0 || tiers.length === 1
+                            ? "0%"
+                            : userPosition < minTierPoints
+                            ? "0%"
+                            : userPosition / maxTierPoints >= 0.8 &&
+                              tiers.length < 5
+                            ? "80%"
+                            : userPosition > maxTierPoints
+                            ? "100%"
+                            : userPosition >= maxTierPoints ||
+                              (tiers.length >= 4 && userPosition === tiers)
+                            ? "110%"
+                            : `${
+                                ((userPosition - minTierPoints) /
+                                  positionRange) *
+                                100
+                              }%`,
+                      }}
+                    >
+                      <div className="text-xs font-medium pt-2.5">
+                        You are here
+                        <div
+                          className="bg-white origin-center rotate-45 rounded-br-sm w-3 h-3 mt-2"
+                          style={{
+                            marginLeft:
+                              userPosition === 0 || tiers.length === 1
+                                ? "0%"
+                                : userPosition > maxTierPoints
+                                ? "90%"
+                                : userPosition / maxTierPoints >= 0.8
+                                ? "85%"
+                                : `${
+                                    ((userPosition - minTierPoints) /
+                                      positionRange) *
+                                    100
+                                  }%`,
+                          }}
+                        ></div>
+                      </div>
+                    </div>
+                  )}
 
-                  {userPosition !== 0 &&
-                    tiers.map((tier, index) => {
+                  <div
+                    className={`bg-neutral-800 w-auto h-2 rounded mt-4 items-center flex relative ${
+                      tiers.length > 4
+                        ? "min-w-[130%]"
+                        : tiers.length > 6
+                        ? "min-w-[150%]"
+                        : tiers.length > 10
+                        ? "min-w-[200%]"
+                        : "min-w-auto"
+                    }`}
+                  >
+                    <div
+                      className="bg-blue-600 h-2 rounded flex justify-between"
+                      style={{
+                        width:
+                          userPosition === 0 || tiers.length === 1
+                            ? "0%"
+                            : userPosition >= maxTierPoints
+                            ? "100%"
+                            : `${
+                                ((userPosition - minTierPoints) /
+                                  positionRange) *
+                                100
+                              }%`,
+                      }}
+                    ></div>
+
+                    {userPosition !== 0 &&
+                      tiers.map((tier, index) => {
+                        const isFirstTier = index === 0;
+                        const isLastTier = index === tiers.length - 1;
+                        const prevLeftPosition =
+                          index > 0
+                            ? ((tiers[index - 1].points - minTierPoints) /
+                                positionRange) *
+                              100
+                            : 0;
+                        let leftPosition =
+                          isFirstTier &&
+                          tiers.length > 4 ||
+                          userPosition === isFirstTier
+                            ? 2
+                            : isFirstTier && tiers.length > 4
+                            ? 3.2
+                            : isFirstTier
+                            ? 0
+                            : isLastTier
+                            ? 100
+                            : `${
+                                ((tier.points - minTierPoints) /
+                                  positionRange) *
+                                100
+                              }`;
+                        if (leftPosition - prevLeftPosition < 10 && index > 0) {
+                          leftPosition = prevLeftPosition + 10;
+                        }
+
+                        if (
+                          userPosition > tier.points ||
+                          userPosition === tier.points
+                        ) {
+                          return (
+                            <div
+                              key={tier.id}
+                              className="bg-blue-600 w-6 h-6 rounded-full p-2 mt-6"
+                              style={{
+                                position: "absolute",
+                                left: leftPosition + "%",
+                                transform: "translate(-50%, -50%)",
+                              }}
+                            ></div>
+                          );
+                        }
+                      })}
+
+                    {tiers.map((tier, index) => {
                       const isFirstTier = index === 0;
                       const isLastTier = index === tiers.length - 1;
+
+                      const leftPosition =
+                        isFirstTier &&
+                        tiers.length > 4 ||
+                        userPosition === isFirstTier
+                          ? 2
+                          : isFirstTier && tiers.length > 4
+                          ? 1
+                          : isFirstTier
+                          ? 0
+                          : isLastTier
+                          ? 100
+                          : `${
+                              ((tier.points - minTierPoints) / positionRange) *
+                              100
+                            }`;
+
+                      return (
+                        <div
+                          key={index}
+                          className="bg-white w-2 h-2 rounded mt-2"
+                          style={{
+                            position: "absolute",
+                            left: leftPosition + "%",
+                            transform: "translate(-50%, -50%)",
+                          }}
+                        ></div>
+                      );
+                    })}
+                  </div>
+                  <div
+                    className={`flex gap-2 pt-3 mb-10 relative ${
+                      tiers.length > 4
+                        ? "min-w-[130%]"
+                        : tiers.length > 6
+                        ? "min-w-[150%]"
+                        : tiers.length > 10
+                        ? "min-w-[200%]"
+                        : "min-w-auto"
+                    }`}
+                  >
+                    {tiers.map((tier, index) => {
+                      const isFirstTier = index === 0;
+                      const isLastTier = index === tiers.length - 1;
+                      const minTierPoints = tiers[0].points;
+                      const maxTierPoints = tiers[tiers.length - 1].points;
+                      const positionRange = maxTierPoints - minTierPoints;
+
                       const prevLeftPosition =
-                      index > 0
-                        ? ((tiers[index - 1].points - minTierPoints) /
-                            positionRange) *
-                          100
-                        : 0;
-                      let leftPosition = isFirstTier
-                        ? 0
-                        : isLastTier
-                        ? 100
-                        : `${
-                            ((tier.points - minTierPoints) /
+                        index > 0
+                          ? ((tiers[index - 1].points - minTierPoints) /
                               positionRange) *
                             100
-                          }`;
-                          if (leftPosition - prevLeftPosition < 10 && index > 0) {
-                            leftPosition = prevLeftPosition + 10;
-                          }
+                          : 0;
+
+                      let leftPosition =
+                        index > 3 && isFirstTier
+                          ? 1
+                          : isFirstTier
+                          ? 0
+                          : isLastTier && index < 6
+                          ? 92
+                          : isLastTier
+                          ? 96
+                          : `${
+                              ((tier.points - minTierPoints) / positionRange) *
+                              100
+                            }`;
 
                       if (
-                        userPosition > tier.points ||
-                        userPosition === tier.points
+                        leftPosition - prevLeftPosition <= 10 &&
+                        tiers.length > 0 &&
+                        tiers.length < isLastTier
                       ) {
-                        return (
-                          <div
-                            key={tier.id}
-                            className="bg-blue-600 w-6 h-6 rounded-full p-2 mt-6"
-                            style={{
-                              position: "absolute",
-                              left: leftPosition + "%",
-                              transform: "translate(-50%, -50%)",
-                            }}
-                          ></div>
-                        );
+                        leftPosition = prevLeftPosition + 10;
                       }
+                      console.log("leftPosition", leftPosition);
+                      return (
+                        <div
+                          key={index}
+                          className="text-white m-4"
+                          style={{
+                            position: "absolute",
+                            left: leftPosition + "%",
+                            transform: "translate(-50%, -50%)",
+                            textAlign:
+                              index === 0
+                                ? "left"
+                                : index === tiers.length - 1
+                                ? "end"
+                                : "",
+                          }}
+                        >
+                          <p className="text-white text-sm font-semibold grid">
+                            {tier.name}
+                            <span className="text-sm font-normal opacity-50">
+                              ₹{tier.points}
+                            </span>
+                          </p>
+                        </div>
+                      );
                     })}
-
-                  {tiers.map((tier, index) => {
-                    const isFirstTier = index === 0;
-                    const isLastTier = index === tiers.length - 1;
-                   
-                    const leftPosition = isFirstTier
-                      ? 0  
-                      : index === 0 && userPosition
-                      ? 1                     
-                      : isLastTier
-                      ? 100
-                      : `${
-                          ((tier.points - minTierPoints) / positionRange) *
-                          100
-                        }`;
-                       
-                    return (
-                      <div
-                        key={index}
-                        className="bg-white w-2 h-2 rounded mt-2"
-                        style={{
-                          position: "absolute",
-                          left: leftPosition + "%",
-                          transform: "translate(-50%, -50%)",
-                        }}
-                      ></div>
-                    );
-                  })}
+                  </div>
                 </div>
-                <div
-                  className={`flex gap-2 pt-3 mb-10 relative ${
-                    tiers.length > 4
-                      ? "min-w-[130%]"
-                      : tiers.length > 6
-                      ? "min-w-[150%]"
-                      : tiers.length > 10
-                      ? "min-w-[200%]"
-                      : "min-w-auto"
-                  }`}
-                >
-                  {tiers.map((tier, index) => {
-                    const isFirstTier = index === 0;
-                    const isLastTier = index === tiers.length - 1;
-                    const minTierPoints = tiers[0].points;
-                    const maxTierPoints = tiers[tiers.length - 1].points;
-                    const positionRange = maxTierPoints - minTierPoints;
-
-                    const prevLeftPosition =
-                      index > 0
-                        ? ((tiers[index - 1].points - minTierPoints) /
-                            positionRange) *
-                          100
-                        : 0;
-
-                    let leftPosition =
-                      index > 3 && isFirstTier
-                        ? 1
-                        : isFirstTier
-                        ? 0
-                        : isLastTier && index < 6
-                        ? 92
-                        : isLastTier
-                        ? 96
-                        : `${
-                            ((tier.points - minTierPoints) /
-                              positionRange) *
-                            100
-                          }`;
-
-                    if (leftPosition - prevLeftPosition <= 10 && tiers.length > 0 && tiers.length < isLastTier) {
-                      leftPosition = prevLeftPosition + 10  ;
-                    }
-                    console.log("leftPosition", leftPosition);
-                    return (
-                      <div
-                        key={index}
-                        className="text-white m-4"
-                        style={{
-                          position: "absolute",
-                          left: leftPosition + "%",
-                          transform: "translate(-50%, -50%)",
-                          textAlign:
-                            index === 0
-                              ? "left"
-                              : index === tiers.length - 1
-                              ? "end"
-                              : "",
-                        }}
-                      >
-                        <p className="text-white text-sm font-semibold grid">
-                          {tier.name}
-                          <span className="text-sm font-normal opacity-50">
-                            ₹{tier.points}
-                          </span>
-                        </p>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
               </div>
             </div>
 
